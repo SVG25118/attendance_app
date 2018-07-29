@@ -12,7 +12,7 @@ class Settings extends StatelessWidget {
             size: 150.0,
             color: Colors.black12
         ),
-        new Text('Settings tab content')
+        new Text('There are currently no settings that require your input')
       ],
     ),
   );

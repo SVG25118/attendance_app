@@ -1,84 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import './tabs/home.dart' as _firstTab;
-import './tabs/courseFinder.dart' as _secondTab;
-import './tabs/stats.dart' as _thirdTab;
-import './tabs/settings.dart' as _fourthTab;
-import './screens/about.dart' as _aboutPage;
-import './screens/support.dart' as _supportPage;
-
-void main() => runApp(new MaterialApp(
-  title: 'UoN Attendance',
-  theme: new ThemeData(
-      primarySwatch: Colors.blueGrey,
-      scaffoldBackgroundColor: Colors.white,
-      primaryColor: Colors.blueGrey, backgroundColor: Colors.white
-  ),
-  home: new Tabs(),
-  onGenerateRoute: (RouteSettings settings) {
-    switch (settings.name) {
-      case '/about': return new FromRightToLeft(
-        builder: (_) => new _aboutPage.About(),
-        settings: settings,
-      );
-      case '/support': return new FromRightToLeft(
-        builder: (_) => new _supportPage.Support(),
-        settings: settings,
-      );
-    }
-  },
-  // routes: <String, WidgetBuilder> {
-  //   '/about': (BuildContext context) => new _aboutPage.About(),
-  // }
-));
-
-class FromRightToLeft<T> extends MaterialPageRoute<T> {
-  FromRightToLeft({ WidgetBuilder builder, RouteSettings settings })
-      : super(builder: builder, settings: settings);
-
-  @override
-  Widget buildTransitions(
-      BuildContext context,
-      Animation<double> animation,
-      Animation<double> secondaryAnimation,
-      Widget child) {
-
-    if (settings.isInitialRoute)
-      return child;
-
-    return new SlideTransition(
-      child: new Container(
-        decoration: new BoxDecoration(
-            boxShadow: [
-              new BoxShadow(
-                color: Colors.black26,
-                blurRadius: 25.0,
-              )
-            ]
-        ),
-        child: child,
-      ),
-      position: new Tween<Offset>(
-        begin: const Offset(1.0, 0.0),
-        end: Offset.zero,
-      )
-          .animate(
-          new CurvedAnimation(
-            parent: animation,
-            curve: Curves.fastOutSlowIn,
-          )
-      ),
-    );
-  }
-  @override Duration get transitionDuration => const Duration(milliseconds: 400);
-}
+import './tabs/manageLecture.dart' as _secondTab;
+import './tabs/createLecture.dart' as _thirdTab;
+//import './tabs/settings.dart' as _fourthTab;
 
 class Tabs extends StatefulWidget {
+  String uid;
+  Tabs(String _uid){
+    uid = _uid;
+  }
+
   @override
-  TabsState createState() => new TabsState();
+  TabsState createState() => new TabsState(uid);
 }
 
 class TabsState extends State<Tabs> {
+  String uid;
+  TabsState(String _uid){
+    uid = _uid;
+  }
 
   PageController _tabController;
 
@@ -121,9 +62,9 @@ class TabsState extends State<Tabs> {
           onPageChanged: onTabChanged,
           children: <Widget>[
             new _firstTab.Home(),
-            new _secondTab.courseFinder(),
-            new _thirdTab.Stats(),
-            new _fourthTab.Settings()
+            new _secondTab.Manage(),
+            new _thirdTab.Create(),
+            //new _fourthTab.Settings()
           ],
         ),
       ),
@@ -168,6 +109,14 @@ class TabsState extends State<Tabs> {
                   ),
                 ),
               ),
+              new Padding(
+                padding: new EdgeInsets.fromLTRB(0.0,5.0,0.0,25.0),
+                child: new Text(
+                  "staff",
+                  style: new TextStyle(fontSize: 32.0,color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+              ),
               new ListTile(
                   leading: new Icon(Icons.chat),
                   title: new Text('Support'),
@@ -189,7 +138,8 @@ class TabsState extends State<Tabs> {
                   leading: new Icon(Icons.exit_to_app),
                   title: new Text('Sign Out'),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   }
               ),
             ],
@@ -218,7 +168,7 @@ class TabItem {
 
 const List<TabItem> TabItems = const <TabItem>[
   const TabItem(title: 'Announcements', icon: Icons.school),
-  const TabItem(title: 'Course Finder', icon: Icons.location_on),
-  const TabItem(title: 'Dashboard', icon: Icons.dashboard),
-  const TabItem(title: 'Settings', icon: Icons.settings),
+  const TabItem(title: 'Lecture Management', icon: Icons.location_on),
+  const TabItem(title: 'Create Lecture', icon: Icons.dashboard),
+  //const TabItem(title: 'Settings', icon: Icons.settings),
 ];

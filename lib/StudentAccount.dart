@@ -2,15 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import './tabs/home.dart' as _firstTab;
 import './tabs/courseFinder.dart' as _secondTab;
-import './tabs/dashboard.dart' as _thirdTab;
-import './tabs/settings.dart' as _fourthTab;
+import './tabs/stats.dart' as _thirdTab;
+//import './tabs/settings.dart' as _fourthTab;
 
 class Tabs extends StatefulWidget {
+  String uid;
+  Tabs(String _uid){
+    uid = _uid;
+  }
+
   @override
-  TabsState createState() => new TabsState();
+  TabsState createState() => new TabsState(uid);
 }
 
 class TabsState extends State<Tabs> {
+  String uid;
+  TabsState(String _uid){
+    uid = _uid;
+  }
 
   PageController _tabController;
 
@@ -54,8 +63,8 @@ class TabsState extends State<Tabs> {
           children: <Widget>[
             new _firstTab.Home(),
             new _secondTab.courseFinder(),
-            new _thirdTab.Dashboard(),
-            new _fourthTab.Settings()
+            new _thirdTab.Stats(),
+            //new _fourthTab.Settings()
           ],
         ),
       ),
@@ -98,6 +107,14 @@ class TabsState extends State<Tabs> {
                   child: new Center(
                     child: new Image.asset("assets/img/uon-logo-transparent.png"),
                   ),
+                ),
+              ),
+              new Padding(
+                padding: new EdgeInsets.fromLTRB(0.0,5.0,0.0,25.0),
+                child: new Text(
+                  uid,
+                  style: new TextStyle(fontSize: 32.0,color: Colors.black),
+                  textAlign: TextAlign.center,
                 ),
               ),
               new ListTile(
@@ -152,6 +169,6 @@ class TabItem {
 const List<TabItem> TabItems = const <TabItem>[
   const TabItem(title: 'Announcements', icon: Icons.school),
   const TabItem(title: 'Course Finder', icon: Icons.location_on),
-  const TabItem(title: 'Dashboard', icon: Icons.dashboard),
-  const TabItem(title: 'Settings', icon: Icons.settings),
+  const TabItem(title: 'Stats', icon: Icons.dashboard),
+  //const TabItem(title: 'Settings', icon: Icons.settings),
 ];

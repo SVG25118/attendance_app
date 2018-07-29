@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Dashboard extends StatelessWidget {
+class Stats extends StatelessWidget {
   @override
   Widget build(BuildContext context) => new Container(
     child: new Column(
@@ -12,7 +12,7 @@ class Dashboard extends StatelessWidget {
               size: 150.0,
               color: Colors.black12
           ),
-          new Text('Dashboard tab content')
+          new Text('Stats tab content')
         ]
     ),
   );
